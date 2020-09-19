@@ -1,0 +1,60 @@
+﻿@model IEnumerable<USWR.Models.CustomSites>
+@{
+    ViewBag.Title = "Welcome";
+    //Layout = null;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Useful web-sites references</title>
+</head>
+<body>
+    <div align="right">
+        <a asp-action="UserComments" asp-controller="User">Мои комментарии</a>
+        <a href="http://localhost:52439/" >Выход</a>
+    </div>
+    <div>
+        <form asp-controller="User" asp-action="IndexFind">
+            <p>
+                Title: <input type="text" name="KeyWords">
+                <input type="submit" value="Filter" />
+            </p>
+        </form>
+    </div>
+    <table class="table">
+        <tr>
+            <td>Заголовок</td>
+            <td>Ссылка</td>
+            <td>Ключевые слова</td>
+            <td>Описание</td>
+        </tr>
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>@item.Header</td>
+        <td><a href="@item.Link">Ссылка на сайт</a></td>
+        <td>@item.Keywords</td>
+        <td>@item.Description</td>
+        <td>@item.PositiveRating</td>
+        <td>
+            <a href="/User/AddPositiveRate?id=@item.Id"><img src="https://cdn.icon-icons.com/icons2/300/PNG/256/like-icon_31852.png" height="20" width="20" /></a>
+        </td>
+        <td>@item.NegativeRating</td>
+        <td>
+            <a href="/User/AddNegativeRate?id=@item.Id"><img src="https://cdn.icon-icons.com/icons2/300/PNG/256/dislike-icon_31856.png" height="20" width="20" /></a>
+        </td>
+        <td>
+            <a href="/User/AddComment?id=@item.Id">Добавить<br />комментарий</a>
+        </td>
+        <td>
+            <a asp-action="Comments" asp-controller="User" asp-route-id="@item.Id">Просмотреть<br />комментарии</a>
+        </td>
+    </tr>
+
+        }
+    </table>
+</body>
+</html>
